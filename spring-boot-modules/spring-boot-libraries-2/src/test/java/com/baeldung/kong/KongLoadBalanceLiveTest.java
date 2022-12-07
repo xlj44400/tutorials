@@ -1,14 +1,13 @@
 package com.baeldung.kong;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 import java.net.URI;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -27,11 +26,11 @@ import com.baeldung.kong.domain.UpstreamObject;
 /**
  * @author aiet
  */
-@RunWith(SpringRunner.class)
+
 @SpringBootTest(webEnvironment = DEFINED_PORT, classes = StockApp.class, properties = "server.servlet.contextPath=/springbootapp")
 public class KongLoadBalanceLiveTest {
 
-    @Before
+    @BeforeEach
     public void init() {
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }

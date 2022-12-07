@@ -4,25 +4,24 @@ import com.baeldung.kong.domain.APIObject;
 import com.baeldung.kong.domain.ConsumerObject;
 import com.baeldung.kong.domain.KeyAuthObject;
 import com.baeldung.kong.domain.PluginObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URI;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 /**
  * @author aiet
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = DEFINED_PORT, classes = StockApp.class)
 public class KongAdminAPILiveTest {
 
@@ -34,7 +33,7 @@ public class KongAdminAPILiveTest {
         return null;
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }

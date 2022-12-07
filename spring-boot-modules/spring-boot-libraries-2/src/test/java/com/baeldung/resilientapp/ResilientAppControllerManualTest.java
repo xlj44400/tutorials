@@ -18,8 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import java.util.stream.IntStream;
 
-import org.junit.Assert;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -32,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import org.springframework.util.Assert;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 // test marked as manual because there are multiple test methods calling the same API and the order is not guaranteed
@@ -78,7 +77,7 @@ class ResilientAppControllerManualTest {
         EXTERNAL_SERVICE.stubFor(WireMock.get("/api/external")
             .willReturn(serverError()));
         ResponseEntity<String> response2 = restTemplate.getForEntity("/api/retry", String.class);
-        Assert.assertEquals(response2.getBody(), "all retries have exhausted");
+        assertEquals(response2.getBody(), "all retries have exhausted");
         EXTERNAL_SERVICE.verify(3, getRequestedFor(urlEqualTo("/api/external")));
     }
 
