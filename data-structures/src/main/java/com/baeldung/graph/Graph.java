@@ -2,73 +2,100 @@ package com.baeldung.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Graph {
+    private Map<Vertex, List<Vertex>> adjVertices;
 
-    private Map<Integer, List<Integer>> adjVertices;
-
-    public Graph() {
-        this.adjVertices = new HashMap<Integer, List<Integer>>();
+    Graph() {
+        this.adjVertices = new HashMap<Vertex, List<Vertex>>();
     }
 
-    public void addVertex(int vertex) {
-        adjVertices.putIfAbsent(vertex, new ArrayList<>());
+    void addVertex(String label) {
+        adjVertices.putIfAbsent(new Vertex(label), new ArrayList<>());
     }
 
-    public void addEdge(int src, int dest) {
-        adjVertices.get(src).add(dest);
+    void removeVertex(String label) {
+        Vertex v = new Vertex(label);
+        adjVertices.values().stream().forEach(e -> e.remove(v));
+        adjVertices.remove(new Vertex(label));
     }
 
-    public void dfsWithoutRecursion(int start) {
-        Stack<Integer> stack = new Stack<Integer>();
-        boolean[] isVisited = new boolean[adjVertices.size()];
-        stack.push(start);
-        while (!stack.isEmpty()) {
-            int current = stack.pop();
-            isVisited[current] = true;
-            visit(current);
-            for (int dest : adjVertices.get(current)) {
-                if (!isVisited[dest])
-                    stack.push(dest);
-            }
+    void addEdge(String label1, String label2) {
+        Vertex v1 = new Vertex(label1);
+        Vertex v2 = new Vertex(label2);
+        adjVertices.get(v1).add(v2);
+        adjVertices.get(v2).add(v1);
+    }
+
+    void removeEdge(String label1, String label2) {
+        Vertex v1 = new Vertex(label1);
+        Vertex v2 = new Vertex(label2);
+        List<Vertex> eV1 = adjVertices.get(v1);
+        List<Vertex> eV2 = adjVertices.get(v2);
+        if (eV1 != null)
+            eV1.remove(v2);
+        if (eV2 != null)
+            eV2.remove(v1);
+    }
+
+    List<Vertex> getAdjVertices(String label) {
+        return adjVertices.get(new Vertex(label));
+    }
+    
+    String printGraph() {
+        StringBuffer sb = new StringBuffer();
+        for(Vertex v : adjVertices.keySet()) {
+            sb.append(v);
+            sb.append(adjVertices.get(v));
         }
+        return sb.toString();
     }
 
-    public void dfs(int start) {
-        boolean[] isVisited = new boolean[adjVertices.size()];
-        dfsRecursive(start, isVisited);
-    }
-
-    private void dfsRecursive(int current, boolean[] isVisited) {
-        isVisited[current] = true;
-        visit(current);
-        for (int dest : adjVertices.get(current)) {
-            if (!isVisited[dest])
-                dfsRecursive(dest, isVisited);
+    class Vertex {
+        String label;
+        Vertex(String label) {
+            this.label = label;
         }
-    }
-
-    public List<Integer> topologicalSort(int start) {
-        LinkedList<Integer> result = new LinkedList<Integer>();
-        boolean[] isVisited = new boolean[adjVertices.size()];
-        topologicalSortRecursive(start, isVisited, result);
-        return result;
-    }
-
-    private void topologicalSortRecursive(int current, boolean[] isVisited, LinkedList<Integer> result) {
-        isVisited[current] = true;
-        for (int dest : adjVertices.get(current)) {
-            if (!isVisited[dest])
-                topologicalSortRecursive(dest, isVisited, result);
+        
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + getOuterType().hashCode();
+            result = prime * result + ((label == null) ? 0 : label.hashCode());
+            return result;
         }
-        result.addFirst(current);
-    }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Vertex other = (Vertex) obj;
+            if (!getOuterType().equals(other.getOuterType()))
+                return false;
+            if (label == null) {
+                if (other.label != null)
+                    return false;
+            } else if (!label.equals(other.label))
+                return false;
+            return true;
+        }
 
-    private void visit(int value) {
-        System.out.print(" " + value);        
+        @Override
+        public String toString() {
+            return label;
+        }
+
+
+        private Graph getOuterType() {
+            return Graph.this;
+        }
     }
 }

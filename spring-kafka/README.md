@@ -5,6 +5,12 @@ This module contains articles about Spring with Kafka
 ### Relevant articles
 
 - [Intro to Apache Kafka with Spring](https://www.baeldung.com/spring-kafka)
+- [Testing Kafka and Spring Boot](https://www.baeldung.com/spring-boot-kafka-testing)
+- [Monitor the Consumer Lag in Apache Kafka](https://www.baeldung.com/java-kafka-consumer-lag)
+- [Send Large Messages With Kafka](https://www.baeldung.com/java-kafka-send-large-message)
+- [Configuring Kafka SSL Using Spring Boot](https://www.baeldung.com/spring-boot-kafka-ssl)
+- [Kafka Streams With Spring Boot](https://www.baeldung.com/spring-boot-kafka-streams)
+- [Get the Number of Messages in an Apache Kafka Topic](https://www.baeldung.com/java-kafka-count-topic-messages)
 
 ### Intro
 

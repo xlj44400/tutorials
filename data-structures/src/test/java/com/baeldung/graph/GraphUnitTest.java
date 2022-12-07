@@ -1,40 +1,47 @@
 package com.baeldung.graph;
 
-import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class GraphUnitTest {
-
     @Test
-    public void givenDirectedGraph_whenDFS_thenPrintAllValues() {
-        Graph graph = createDirectedGraph();
-        graph.dfs(0);
-        System.out.println();
-        graph.dfsWithoutRecursion(0);
+    public void givenAGraph_whenTraversingDepthFirst_thenExpectedResult() {
+        Graph graph = createGraph();
+        assertEquals("[Bob, Rob, Maria, Alice, Mark]", 
+            GraphTraversal.depthFirstTraversal(graph, "Bob").toString());
     }
-
+    
     @Test
-    public void givenDirectedGraph_whenGetTopologicalSort_thenPrintValuesSorted() {
-        Graph graph = createDirectedGraph();
-        List<Integer> list = graph.topologicalSort(0);
-        System.out.println(list);
+    public void givenAGraph_whenTraversingBreadthFirst_thenExpectedResult() {
+        Graph graph = createGraph();
+       assertEquals("[Bob, Alice, Rob, Mark, Maria]", 
+            GraphTraversal.breadthFirstTraversal(graph, "Bob").toString());
     }
-
-    private Graph createDirectedGraph() {
+    
+    @Test
+    public void givenAGraph_whenRemoveVertex_thenVertedNotFound() {
+        Graph graph = createGraph();
+        assertEquals("[Bob, Alice, Rob, Mark, Maria]", 
+            GraphTraversal.breadthFirstTraversal(graph, "Bob").toString());
+        
+        graph.removeVertex("Maria");
+        assertEquals("[Bob, Alice, Rob, Mark]", 
+            GraphTraversal.breadthFirstTraversal(graph, "Bob").toString());
+    }
+    
+    Graph createGraph() {
         Graph graph = new Graph();
-        graph.addVertex(0);
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addVertex(5);
-        graph.addEdge(0, 1);
-        graph.addEdge(0, 2);
-        graph.addEdge(1, 3);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 4);
-        graph.addEdge(4, 5);
+        graph.addVertex("Bob");
+        graph.addVertex("Alice");
+        graph.addVertex("Mark");
+        graph.addVertex("Rob");
+        graph.addVertex("Maria");
+        graph.addEdge("Bob", "Alice");
+        graph.addEdge("Bob", "Rob");
+        graph.addEdge("Alice", "Mark");
+        graph.addEdge("Rob", "Mark");
+        graph.addEdge("Alice", "Maria");
+        graph.addEdge("Rob", "Maria");
         return graph;
     }
 }

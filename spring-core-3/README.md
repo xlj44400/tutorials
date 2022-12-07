@@ -1,7 +1,14 @@
+## Spring Core
+
+This module contains articles about core Spring functionality
+
 ## Relevant Articles:
 
 - [Understanding getBean() in Spring](https://www.baeldung.com/spring-getbean)
-- [Exploring the Spring BeanFactory API](https://www.baeldung.com/spring-beanfactory)
+- [Guide to the Spring BeanFactory](https://www.baeldung.com/spring-beanfactory)
 - [How to use the Spring FactoryBean?](https://www.baeldung.com/spring-factorybean)
-- [Spring – Injecting Collections](https://www.baeldung.com/spring-injecting-collections)
-- More articles: [[<-- prev]](/spring-core-2)
+- [Design Patterns in the Spring Framework](https://www.baeldung.com/spring-framework-design-patterns)
+- [Difference Between BeanFactory and ApplicationContext](https://www.baeldung.com/spring-beanfactory-vs-applicationcontext)
+- [A Spring Custom Annotation for a Better DAO](http://www.baeldung.com/spring-annotation-bean-pre-processor)
+- [Custom Scope in Spring](http://www.baeldung.com/spring-custom-scope)
+- More articles: [[<-- prev]](/spring-core-2) [[next -->]](/spring-core-4)

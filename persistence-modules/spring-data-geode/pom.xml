@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-data-geode</artifactId>
@@ -9,16 +10,15 @@
 
     <parent>
         <groupId>com.baeldung</groupId>
-        <artifactId>parent-modules</artifactId>
+        <artifactId>persistence-modules</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../</relativePath>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>2.1.9.RELEASE</version>
+            <version>${spring.boot.starter.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -42,7 +42,6 @@
             <artifactId>spring-geode-starter</artifactId>
             <version>${spring-geode-starter-version}</version>
         </dependency>
-        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
@@ -62,7 +61,7 @@
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>maven-apt-plugin</artifactId>
-                <version>1.0</version>
+                <version>${maven-apt-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -85,10 +84,11 @@
     </build>
 
     <properties>
-    	<spring-boot-version>2.1.9.RELEASE</spring-boot-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot-version>2.1.9.RELEASE</spring-boot-version>
         <start-class>com.baeldung.springdatageode.app.ClientCacheApp</start-class>
         <spring-geode-starter-version>1.1.1.RELEASE</spring-geode-starter-version>
+        <spring.boot.starter.version>2.1.9.RELEASE</spring.boot.starter.version>
+        <maven-apt-plugin.version>1.0</maven-apt-plugin.version>
     </properties>
 
 </project>

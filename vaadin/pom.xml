@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.test</groupId>
@@ -9,12 +10,12 @@
     <packaging>war</packaging>
 
     <parent>
-        <artifactId>parent-boot-2</artifactId>
         <groupId>com.baeldung</groupId>
+        <artifactId>parent-boot-2</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../parent-boot-2</relativePath>
     </parent>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -26,7 +27,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -107,7 +108,8 @@
                     </filesets>
                 </configuration>
             </plugin>
-            <!-- The Jetty plugin allows us to easily test the development build by running jetty:run on the command line. -->
+            <!-- The Jetty plugin allows us to easily test the development build by running jetty:run -->
+            <!-- on the command line. -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -126,7 +128,7 @@
     <repositories>
         <repository>
             <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
     </repositories>
 
@@ -141,7 +143,7 @@
             <repositories>
                 <repository>
                     <id>vaadin-prereleases</id>
-                    <url>http://maven.vaadin.com/vaadin-prereleases</url>
+                    <url>https://maven.vaadin.com/vaadin-prereleases</url>
                 </repository>
                 <repository>
                     <id>vaadin-snapshots</id>
@@ -157,7 +159,7 @@
             <pluginRepositories>
                 <pluginRepository>
                     <id>vaadin-prereleases</id>
-                    <url>http://maven.vaadin.com/vaadin-prereleases</url>
+                    <url>https://maven.vaadin.com/vaadin-prereleases</url>
                 </pluginRepository>
                 <pluginRepository>
                     <id>vaadin-snapshots</id>
@@ -182,7 +184,6 @@
         <vaadin-client-compiled.version>8.8.5</vaadin-client-compiled.version>
         <vaadin-themes.version>8.8.5</vaadin-themes.version>
         <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <vaadin.widgetset.mode>local</vaadin.widgetset.mode>

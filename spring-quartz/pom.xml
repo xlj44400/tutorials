@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.baeldung</groupId>
     <artifactId>spring-quartz</artifactId>
-    <name>spring-quartz</name>
     <version>0.0.1-SNAPSHOT</version>
-    <description>Demo project for Scheduling in Spring with Quartz</description>
+    <name>spring-quartz</name>
     <packaging>jar</packaging>
+    <description>Demo project for Scheduling in Spring with Quartz</description>
 
     <parent>
-        <artifactId>parent-boot-2</artifactId>
         <groupId>com.baeldung</groupId>
+        <artifactId>parent-boot-2</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../parent-boot-2</relativePath>
     </parent>
@@ -54,8 +54,8 @@
     </build>
 
     <properties>
-        <quartz.version>2.3.0</quartz.version>
-        <c3p0.version>0.9.5.2</c3p0.version>
+        <quartz.version>2.3.2</quartz.version>
+        <c3p0.version>0.9.5.5</c3p0.version>
     </properties>
 
 </project>

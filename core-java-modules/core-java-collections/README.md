@@ -3,7 +3,6 @@
 This module contains articles about Java collections
 
 ### Relevant Articles: 
-- [Collect a Java Stream to an Immutable Collection](https://www.baeldung.com/java-stream-immutable-collection)
 - [Introduction to the Java ArrayDeque](https://www.baeldung.com/java-array-deque)
 - [An Introduction to Java.util.Hashtable Class](https://www.baeldung.com/java-hash-table)
 - [Thread Safe LIFO Data Structure Implementations](https://www.baeldung.com/java-lifo-thread-safe)
@@ -13,4 +12,5 @@ This module contains articles about Java collections
 - [Defining a Char Stack in Java](https://www.baeldung.com/java-char-stack)
 - [Guide to the Java Queue Interface](https://www.baeldung.com/java-queue)
 - [An Introduction to Synchronized Java Collections](https://www.baeldung.com/java-synchronized-collections)
-- [[More -->]](/core-java-modules/core-java-collections-2)
+- [Convert an Array of Primitives to a List](https://www.baeldung.com/java-primitive-array-to-list)
+- More articles: [[next -->]](/core-java-modules/core-java-collections-2)

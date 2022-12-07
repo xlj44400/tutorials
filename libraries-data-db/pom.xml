@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>libraries-data-db</artifactId>
     <name>libraries-data-db</name>
 
     <parent>
         <groupId>com.baeldung</groupId>
-        <artifactId>parent-modules</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <artifactId>parent-boot-2</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../parent-boot-2</relativePath>
     </parent>
 
     <dependencies>
@@ -56,23 +57,12 @@
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-xml</artifactId>
-            <version>${datanucleus-xml.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jdo-query</artifactId>
             <version>${datanucleus-jdo-query.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
         </dependency>
         <!-- Hikari CP -->
         <dependency>
@@ -86,6 +76,64 @@
             <groupId>io.ebean</groupId>
             <artifactId>ebean</artifactId>
             <version>${ebean.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Debezium -->
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-api</artifactId>
+            <version>${debezium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-embedded</artifactId>
+            <version>${debezium.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-connector-mysql</artifactId>
+            <version>${debezium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainers-version}</version>
+        </dependency>
+        <!-- Spring Core dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Spring Data JPA, crud repository -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- Utility dependencies -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
@@ -105,16 +153,24 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <property name="plugin_classpath" refid="maven.plugin.classpath" />
-                                <taskdef name="gen-reladomo" classpath="plugin_classpath" classname="com.gs.fw.common.mithra.generator.MithraGenerator" />
-                                <gen-reladomo xml="${project.basedir}/src/main/resources/reladomo/ReladomoClassList.xml" generateGscListMethod="true"
-                                              generatedDir="${project.build.directory}/generated-sources/reladomo" nonGeneratedDir="${project.basedir}/src/main/java" />
+                                <property name="plugin_classpath"
+                                    refid="maven.plugin.classpath" />
+                                <taskdef name="gen-reladomo" classpath="plugin_classpath"
+                                    classname="com.gs.fw.common.mithra.generator.MithraGenerator" />
+                                <gen-reladomo
+                                    xml="${project.basedir}/src/main/resources/reladomo/ReladomoClassList.xml"
+                                    generatedDir="${project.build.directory}/generated-sources/reladomo"
+                                    nonGeneratedDir="${project.basedir}/src/main/java" />
 
-                                <taskdef name="gen-ddl" classname="com.gs.fw.common.mithra.generator.dbgenerator.MithraDbDefinitionGenerator" loaderRef="reladomoGenerator">
+                                <taskdef name="gen-ddl"
+                                    classname="com.gs.fw.common.mithra.generator.dbgenerator.MithraDbDefinitionGenerator"
+                                    loaderRef="reladomoGenerator">
                                     <classpath refid="maven.plugin.classpath" />
                                 </taskdef>
-                                <gen-ddl xml="${project.basedir}/src/main/resources/reladomo/ReladomoClassList.xml"
-                                         generatedDir="${project.build.directory}/generated-db/sql" databaseType="postgres" />
+                                <gen-ddl
+                                    xml="${project.basedir}/src/main/resources/reladomo/ReladomoClassList.xml"
+                                    generatedDir="${project.build.directory}/generated-db/sql"
+                                    databaseType="postgres" />
                             </tasks>
                         </configuration>
                     </execution>
@@ -125,7 +181,6 @@
                         <artifactId>reladomogen</artifactId>
                         <version>${reladomo.version}</version>
                     </dependency>
-
                     <dependency>
                         <groupId>com.goldmansachs.reladomo</groupId>
                         <artifactId>reladomo-gen-util</artifactId>
@@ -167,7 +222,6 @@
                 </executions>
             </plugin>
             <!-- /Reladomo -->
-
             <!-- JDO Plugin -->
             <plugin>
                 <groupId>org.datanucleus</groupId>
@@ -193,7 +247,7 @@
             <plugin>
                 <groupId>io.ebean</groupId>
                 <artifactId>ebean-maven-plugin</artifactId>
-                <version>11.11.2</version>
+                <version>${ebean.plugin.version}</version>
                 <executions>
                     <!-- enhance main classes -->
                     <execution>
@@ -212,17 +266,19 @@
     </build>
 
     <properties>
-        <reladomo.version>16.5.1</reladomo.version>
+        <ebean.plugin.version>11.11.2</ebean.plugin.version>
+        <reladomo.version>18.1.0</reladomo.version>
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
         <ormlite.version>5.0</ormlite.version>
         <datanucleus.version>5.1.1</datanucleus.version>
         <datanucleus-maven-plugin.version>5.0.2</datanucleus-maven-plugin.version>
-        <datanucleus-xml.version>5.0.0-release</datanucleus-xml.version>
         <datanucleus-jdo-query.version>5.0.4</datanucleus-jdo-query.version>
         <javax.jdo.version>3.2.0-m7</javax.jdo.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <HikariCP.version>2.7.2</HikariCP.version>
+        <HikariCP.version>3.4.5</HikariCP.version>
         <ebean.version>11.22.4</ebean.version>
+        <debezium.version>1.4.2.Final</debezium.version>
+        <testcontainers-version>1.15.3</testcontainers-version>
     </properties>
+
 </project>

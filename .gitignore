@@ -39,7 +39,6 @@ target/
 spring-openid/src/main/resources/application.properties
 .recommenders/
 /spring-hibernate4/nbproject/
-spring-security-openid/src/main/resources/application.properties
 
 spring-all/*.log
 
@@ -66,6 +65,10 @@ core-java-io/target_link.txt
 core-java/src/main/java/com/baeldung/manifest/MANIFEST.MF
 ethereum/logs/
 jmeter/src/main/resources/*-JMeter.csv
+jmeter/src/main/resources/*-Basic*.csv
+jmeter/src/main/resources/*-JMeter*.csv
+
+ninja/devDb.mv.db
 
 **/node_modules/
 **/dist
@@ -73,8 +76,6 @@ jmeter/src/main/resources/*-JMeter.csv
 **/out-tsc
 **/nbproject/
 **/nb-configuration.xml
-core-scala/.cache-main
-core-scala/.cache-tests
 
 
 persistence-modules/hibernate5/transaction.log
@@ -87,7 +88,21 @@ transaction.log
 *-shell.log
 
 apache-cxf/cxf-aegis/baeldung.xml
-apache-fop/src/test/resources/input.xml
-apache-fop/src/test/resources/output_herold.pdf
-apache-fop/src/test/resources/output_html2fo.pdf
-apache-fop/src/test/resources/output_jtidy.pdf
+testing-modules/report-*.json
+
+libraries-2/*.db
+
+apache-spark/data/output
+logs/
+libraries-data-io/*.docx
+persistence-modules/spring-hibernate-5/com.*
+spring-boot-modules/spring-boot-react/frontend/build
+spring-boot-modules/spring-boot-react/frontend/node
+spring-boot-modules/spring-boot-react/frontend/yarn.lock
+spring-boot-modules/spring-boot-properties-3/*.log
+
+# SDKMan
+.sdkmanrc
+
+# Localstack
+**/.localstack

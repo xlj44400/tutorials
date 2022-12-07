@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -38,14 +39,16 @@ public class DateTimeFormatterUnitTest {
         LocalDateTime localDateTime = LocalDateTime.of(2018, 1, 1, 10, 15, 50, 500);
         ZoneId losAngelesTimeZone = TimeZone.getTimeZone("America/Los_Angeles").toZoneId();
 
-        DateTimeFormatter localizedFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL);
-        DateTimeFormatter frLocalizedFormatter =
-                DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL).withLocale(Locale.FRANCE);
+        DateTimeFormatter localizedFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy z", Locale.US);
+        DateTimeFormatter frLocalizedFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy z", Locale.FRANCE);
         String formattedDateTime = localizedFormatter.format(ZonedDateTime.of(localDateTime, losAngelesTimeZone));
         String frFormattedDateTime = frLocalizedFormatter.format(ZonedDateTime.of(localDateTime, losAngelesTimeZone));
 
-        Assert.assertEquals("Monday, January 1, 2018 10:15:50 AM PST", formattedDateTime);
-        Assert.assertEquals("lundi 1 janvier 2018 10 h 15 PST", frFormattedDateTime);
+        System.out.println(formattedDateTime);
+        System.out.println(frFormattedDateTime);
+
+        Assert.assertEquals("Monday, January 01, 2018 PST", formattedDateTime);
+        Assert.assertEquals("lundi, janvier 01, 2018 PST", frFormattedDateTime);
     }
 
     @Test
@@ -105,14 +108,15 @@ public class DateTimeFormatterUnitTest {
         Assert.assertEquals("8/23/16", DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).format(anotherSummerDay));
     }
 
-    @Test
-    public void shouldPrintStyledDateTime() {
-        LocalDateTime anotherSummerDay = LocalDateTime.of(2016, 8, 23, 13, 12, 45);
-        Assert.assertEquals("Tuesday, August 23, 2016 1:12:45 PM EET", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
-        Assert.assertEquals("August 23, 2016 1:12:45 PM EET", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
-        Assert.assertEquals("Aug 23, 2016 1:12:45 PM", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
-        Assert.assertEquals("8/23/16 1:12 PM", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
-    }
+    // Note: The exact output format using the different FormatStyle constants differs by JVM/Java version
+    //    @Test
+    //    public void shouldPrintStyledDateTime() {
+    //        LocalDateTime anotherSummerDay = LocalDateTime.of(2016, 8, 23, 13, 12, 45);
+    //        Assert.assertEquals("Tuesday, August 23, 2016 1:12:45 PM EET", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
+    //        Assert.assertEquals("August 23, 2016 1:12:45 PM EET", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
+    //        Assert.assertEquals("Aug 23, 2016 1:12:45 PM", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
+    //        Assert.assertEquals("8/23/16 1:12 PM", DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.of("Europe/Helsinki")).format(anotherSummerDay));
+    //    }
 
     @Test
     public void shouldPrintFormattedDateTimeWithPredefined() {
@@ -126,11 +130,12 @@ public class DateTimeFormatterUnitTest {
         Assert.assertEquals(LocalDate.of(2018, 3, 12), LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse("2018-03-09")).plusDays(3));
     }
 
-    @Test
-    public void shouldParseFormatStyleFull() {
-        ZonedDateTime dateTime = ZonedDateTime.from(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL).parse("Tuesday, August 23, 2016 1:12:45 PM EET"));
-        Assert.assertEquals(ZonedDateTime.of(LocalDateTime.of(2016, 8, 23, 22, 12, 45), ZoneId.of("Europe/Bucharest")), dateTime.plusHours(9));
-    }
+    // Note: The exact output format using the different FormatStyle constants differs by JVM/Java version
+    //    @Test
+    //    public void shouldParseFormatStyleFull() {
+    //        ZonedDateTime dateTime = ZonedDateTime.from(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL).parse("Tuesday, August 23, 2016 1:12:45 PM EET"));
+    //        Assert.assertEquals(ZonedDateTime.of(LocalDateTime.of(2016, 8, 23, 22, 12, 45), ZoneId.of("Europe/Bucharest")), dateTime.plusHours(9));
+    //    }
 
     @Test
     public void shouldParseDateWithCustomFormatter() {
@@ -154,5 +159,36 @@ public class DateTimeFormatterUnitTest {
     public void shouldExpectAnExceptionIfDateTimeStringNotMatchPattern() {
         DateTimeFormatter zonedFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm z");
         ZonedDateTime.from(zonedFormatter.parse("31.07.2016 14:15"));
+    }
+
+    @Test
+    public void shouldPrintFormattedZonedDateTime() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(2021, 02, 15, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        String formattedZonedDateTime = DateTimeFormatter.ISO_INSTANT.format(zonedDateTime);
+        
+        Assert.assertEquals("2021-02-14T23:00:00Z", formattedZonedDateTime);
+    }
+    
+    @Test(expected = UnsupportedTemporalTypeException.class)
+    public void shouldExpectAnExceptionIfInputIsLocalDateTime() {
+        DateTimeFormatter.ISO_INSTANT.format(LocalDate.now());
+    }
+    
+    @Test
+    public void shouldParseZonedDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2021-10-01T05:06:20Z", formatter);
+        
+        Assert.assertEquals("2021-10-01T05:06:20Z", DateTimeFormatter.ISO_INSTANT.format(zonedDateTime));
+    }
+    
+    @Test(expected = DateTimeParseException.class)
+    public void shouldExpectAnExceptionIfTimeZoneIsMissing() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2021-11-01T05:06:20Z", DateTimeFormatter.ISO_INSTANT);
+    }
+    
+    @Test(expected = DateTimeParseException.class)
+    public void shouldExpectAnExceptionIfSecondIsMissing() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2021-12-02T08:06Z", DateTimeFormatter.ISO_INSTANT);
     }
 }
